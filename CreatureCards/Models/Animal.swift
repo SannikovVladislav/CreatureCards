@@ -15,6 +15,7 @@ struct Animal {
     let imageName: String
     let color: UIColor
     let funFact: String
+    let animalImageName: String
 }
 
 // MARK: - Mock Data
@@ -28,7 +29,8 @@ class AnimalData {
             soundFileName: "cat_sound",
             imageName: "cat_icon",
             color: .systemOrange,
-            funFact: "Кошка может прыгнуть в 5 раз выше своего роста!"
+            funFact: "Кошка может прыгнуть в 5 раз выше своего роста!",
+            animalImageName: "cat_image"
         ),
         Animal(
             id: "dog",
@@ -38,7 +40,8 @@ class AnimalData {
             soundFileName: "dog_sound",
             imageName: "dog_icon",
             color: .systemBrown,
-            funFact: "Собаки понимают до 250 слов и жестов!"
+            funFact: "Собаки понимают до 250 слов и жестов!",
+            animalImageName: "dog_image"
         ),
         Animal(
             id: "lion",
@@ -48,7 +51,8 @@ class AnimalData {
             soundFileName: "lion_sound",
             imageName: "lion_icon",
             color: .systemYellow,
-            funFact: "Лев может спать до 20 часов в день!"
+            funFact: "Лев может спать до 20 часов в день!",
+            animalImageName: "lion_image"
         ),
         Animal(
             id: "elephant",
@@ -58,7 +62,8 @@ class AnimalData {
             soundFileName: "elephant_sound",
             imageName: "elephant_icon",
             color: .systemGray,
-            funFact: "Слоны могут слышать друг друга на расстоянии 8 км!"
+            funFact: "Слоны могут слышать друг друга на расстоянии 8 км!",
+            animalImageName: "elephant_image"
         ),
         Animal(
             id: "cow",
@@ -68,7 +73,8 @@ class AnimalData {
             soundFileName: "cow_sound",
             imageName: "cow_icon",
             color: .systemPurple,
-            funFact: "Коровы имеют почти 360-градусный обзор!"
+            funFact: "Коровы имеют почти 360-градусный обзор!",
+            animalImageName: "cow_image"
         )
     ]
     

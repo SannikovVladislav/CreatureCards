@@ -48,6 +48,21 @@ class AnimalsViewController: UIViewController {
         return label
     }()
     
+    private let animalImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.shadowColor = UIColor.black.cgColor
+        imageView.layer.shadowOpacity = 0.3
+        imageView.layer.shadowOffset = CGSize(width: 0, height: 1)
+        imageView.layer.shadowRadius = 4
+        imageView.layer.cornerRadius = 20
+        imageView.layer.masksToBounds = true
+        imageView.layer.borderWidth = 3
+        return imageView
+    }()
+    
     private let englishNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
@@ -86,6 +101,7 @@ class AnimalsViewController: UIViewController {
         view.addSubview(titleLabel)
         view.addSubview(animalCard)
         animalCard.addSubview(animalLetterLabel)
+        animalCard.addSubview(animalImageView)
         animalCard.addSubview(animalNameLabel)
         animalCard.addSubview(englishNameLabel)
         view.addSubview(nextButton)
@@ -107,6 +123,12 @@ class AnimalsViewController: UIViewController {
             // Animal Letter
             animalLetterLabel.centerXAnchor.constraint(equalTo: animalCard.centerXAnchor),
             animalLetterLabel.topAnchor.constraint(equalTo: animalCard.topAnchor, constant: 30),
+            
+            // Animl Image
+            animalImageView.centerXAnchor.constraint(equalTo: animalCard.centerXAnchor),
+            animalImageView.centerYAnchor.constraint(equalTo: animalCard.centerYAnchor),
+            animalImageView.widthAnchor.constraint(equalToConstant: 190),
+            animalImageView.heightAnchor.constraint(equalToConstant: 190),
             
             // Animal Name (Russian)
             animalNameLabel.centerXAnchor.constraint(equalTo: animalCard.centerXAnchor),
@@ -140,6 +162,15 @@ class AnimalsViewController: UIViewController {
         animalLetterLabel.text = animal.letter
         animalNameLabel.text = animal.russianName
         englishNameLabel.text = animal.name
+        
+        // Загрузка изображения животного
+        if let image = UIImage(named: animal.animalImageName) {
+            animalImageView.image = image
+        } else {
+            animalImageView.image = UIImage(systemName: "photo")?
+                .withTintColor(.white, renderingMode: .alwaysOriginal)
+            print("Image not found: \(animal.animalImageName)")
+        }
         
         // Анимация появления
         animalCard.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
