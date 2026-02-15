@@ -114,6 +114,7 @@ class AnimalsViewController: UIViewController {
     // MARK: - Properties
     private var currentAnimalIndex = 0
     private var panGestureRecognizer: UIPanGestureRecognizer!
+    private var shuffledAnimals: [Animal] = []
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -127,6 +128,8 @@ class AnimalsViewController: UIViewController {
         navigationItem.setHidesBackButton(true, animated: false)
         
         print("🔍 Статус системного жеста: \(navigationController?.interactivePopGestureRecognizer?.isEnabled == true ? "ВКЛ" : "ВЫКЛ")")
+        
+        shuffledAnimals = AnimalData.animals.shuffled()
         
         setupView()
         setupConstraints()
@@ -247,10 +250,10 @@ class AnimalsViewController: UIViewController {
                 // Определяем направление
                 if translation.x < 0 { // Свайп влево - следующее животное
                     print("➡️ Следующее животное")
-                    currentAnimalIndex = (currentAnimalIndex + 1) % AnimalData.count
+                    currentAnimalIndex = (currentAnimalIndex + 1) % shuffledAnimals.count
                 } else { // Свайп вправо - предыдущее животное
                     print("⬅️ Предыдущее животное")
-                    currentAnimalIndex = (currentAnimalIndex - 1 + AnimalData.count) % AnimalData.count
+                    currentAnimalIndex = (currentAnimalIndex - 1 + shuffledAnimals.count) % shuffledAnimals.count
                 }
                 
                 // Анимация ухода карточки
@@ -265,13 +268,6 @@ class AnimalsViewController: UIViewController {
                         self.animalCard.alpha = 1
                     }
                 }
-            } else {
-                // Возвращаем карточку на место
-                print("↩️ Отмена свайпа")
-                UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5) {
-                    self.animalCard.transform = .identity
-                    self.animalCard.alpha = 1
-                }
             }
             
         default:
@@ -281,7 +277,8 @@ class AnimalsViewController: UIViewController {
     
     // MARK: - Animal Display
     private func showCurrentAnimal() {
-        guard let animal = AnimalData.animal(at: currentAnimalIndex) else { return }
+        guard currentAnimalIndex < shuffledAnimals.count else { return }
+        let animal = shuffledAnimals[currentAnimalIndex]
         
         // Настраиваем карточку
         animalCard.backgroundColor = animal.color
@@ -327,7 +324,7 @@ class AnimalsViewController: UIViewController {
     
     @objc private func nextButtonTapped() {
         // Переход к следующему животному
-        currentAnimalIndex = (currentAnimalIndex + 1) % AnimalData.count
+        currentAnimalIndex = (currentAnimalIndex + 1) % shuffledAnimals.count
         showCurrentAnimal()
     }
     
