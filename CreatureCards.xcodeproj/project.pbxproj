@@ -45,8 +45,8 @@
 		865148A72EBBD36500723BFD = {
 			isa = PBXGroup;
 			children = (
-				865148B22EBBD36500723BFD /* CreatureCards */,
 				865148B12EBBD36500723BFD /* Products */,
+				865148B22EBBD36500723BFD /* CreatureCards */,
 			);
 			sourceTree = "<group>";
 		};
