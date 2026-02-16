@@ -247,13 +247,10 @@ class AnimalsViewController: UIViewController {
             let shouldChangePage = abs(translation.x) > 100 || abs(velocity.x) > 500
             
             if shouldChangePage {
-                // Определяем направление
-                if translation.x < 0 { // Свайп влево - следующее животное
-                    print("➡️ Следующее животное")
-                    currentAnimalIndex = (currentAnimalIndex + 1) % shuffledAnimals.count
-                } else { // Свайп вправо - предыдущее животное
-                    print("⬅️ Предыдущее животное")
-                    currentAnimalIndex = (currentAnimalIndex - 1 + shuffledAnimals.count) % shuffledAnimals.count
+                if translation.x < 0 { // Свайп влево
+                    currentAnimalIndex = Int.random(in: 0..<shuffledAnimals.count)
+                } else { // Свайп вправо
+                    currentAnimalIndex = Int.random(in: 0..<shuffledAnimals.count)
                 }
                 
                 // Анимация ухода карточки
@@ -307,7 +304,8 @@ class AnimalsViewController: UIViewController {
     
     // MARK: - Actions
     @objc private func handleCardTap() {
-        guard let animal = AnimalData.animal(at: currentAnimalIndex) else { return }
+        guard currentAnimalIndex < shuffledAnimals.count else { return }
+        let animal = shuffledAnimals[currentAnimalIndex]
         
         // Воспроизводим звук
         SoundManager.shared.playSound(named: animal.soundFileName)
@@ -323,10 +321,9 @@ class AnimalsViewController: UIViewController {
     }
     
     @objc private func nextButtonTapped() {
-        // Переход к следующему животному
-        currentAnimalIndex = (currentAnimalIndex + 1) % shuffledAnimals.count
-        showCurrentAnimal()
-    }
+        // Случайное животное
+        currentAnimalIndex = Int.random(in: 0..<shuffledAnimals.count)
+        showCurrentAnimal()    }
     
     @objc private func backButtonTapped() {
         print("⬅️ Возврат на главный экран")

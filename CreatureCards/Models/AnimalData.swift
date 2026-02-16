@@ -20,117 +20,43 @@ struct Animal {
 
 // MARK: - Mock Data
 class AnimalData {
+    
+    private static func a(_ id: String, _ name: String, _ russian: String,
+                          _ letter: String, _ color: UIColor, fact: String = "") -> Animal {
+        return Animal(
+            id: id,
+            name: name,
+            russianName: russian,
+            letter: letter,
+            soundFileName: "\(id)_sound",
+            imageName: "\(id)_icon",
+            color: color,
+            funFact: fact.isEmpty ? "✨ Узнай больше об этом животном!" : fact,
+            animalImageName: "\(id)_image"
+        )
+    }
+    
     static let animals: [Animal] = [
-        Animal(
-            id: "cat",
-            name: "Cat",
-            russianName: "Кошка",
-            letter: "К",
-            soundFileName: "cat_sound",
-            imageName: "cat_icon",
-            color: .systemOrange,
-            funFact: "Кошка может прыгнуть в 5 раз выше своего роста!",
-            animalImageName: "cat_image"
-        ),
-        Animal(
-            id: "dog",
-            name: "Dog",
-            russianName: "Собака",
-            letter: "С",
-            soundFileName: "dog_sound",
-            imageName: "dog_icon",
-            color: .systemBrown,
-            funFact: "Собаки понимают до 250 слов и жестов!",
-            animalImageName: "dog_image"
-        ),
-        Animal(
-            id: "lion",
-            name: "Lion",
-            russianName: "Лев",
-            letter: "Л",
-            soundFileName: "lion_sound",
-            imageName: "lion_icon",
-            color: .systemYellow,
-            funFact: "Лев может спать до 20 часов в день!",
-            animalImageName: "lion_image"
-        ),
-        Animal(
-            id: "elephant",
-            name: "Elephant",
-            russianName: "Слон",
-            letter: "С",
-            soundFileName: "elephant_sound",
-            imageName: "elephant_icon",
-            color: .systemGray,
-            funFact: "Слоны могут слышать друг друга на расстоянии 8 км!",
-            animalImageName: "elephant_image"
-        ),
-        Animal(
-            id: "cow",
-            name: "Cow",
-            russianName: "Корова",
-            letter: "К",
-            soundFileName: "cow_sound",
-            imageName: "cow_icon",
-            color: .systemPurple,
-            funFact: "Коровы имеют почти 360-градусный обзор!",
-            animalImageName: "cow_image"
-        ),
-        Animal(
-            id: "snake",
-            name: "Snake",
-            russianName: "Змея",
-            letter: "З",
-            soundFileName: "snake_sound",
-            imageName: "snake_icon",
-            color: .systemGreen,
-            funFact: "",
-            animalImageName: "snake_image"
-        ),
-        Animal(
-            id: "sheep",
-            name: "Sheep",
-            russianName: "Овечка",
-            letter: "О",
-            soundFileName: "sheep_sound",
-            imageName: "sheep_icon",
-            color: .systemGray2,
-            funFact: "",
-            animalImageName: "sheep_image"
-        ),
-        Animal(
-            id: "monkey",
-            name: "Monkey",
-            russianName: "Обезьяна",
-            letter: "О",
-            soundFileName: "monkey_sound",
-            imageName: "monkey_icon",
-            color: .systemBrown,
-            funFact: "",
-            animalImageName: "monkey_image"
-        ),
-        Animal(
-            id: "zebra",
-            name: "Zebra",
-            russianName: "Зебра",
-            letter: "З",
-            soundFileName: "zebra_sound",
-            imageName: "zebra_icon",
-            color: .systemGray,
-            funFact: "",
-            animalImageName: "zebra_image"
-        ),
-        Animal(
-            id: "hippopotam",
-            name: "Hippopotam",
-            russianName: "Бегемот",
-            letter: "Б",
-            soundFileName: "mhippopotam_sound",
-            imageName: "hippopotam_icon",
-            color: .systemIndigo,
-            funFact: "",
-            animalImageName: "hippopotam_image"
-        ),
+        a("cat", "Cat", "Кошка", "К", .systemOrange,
+          fact: "Кошка может прыгнуть в 5 раз выше своего роста!"),
+        
+        a("dog", "Dog", "Собака", "С", .systemBrown,
+          fact: "Собаки понимают до 250 слов и жестов!"),
+        
+        a("lion", "Lion", "Лев", "Л", .systemYellow,
+          fact: "Лев может спать до 20 часов в день!"),
+        
+        a("elephant", "Elephant", "Слон", "С", .systemGray,
+          fact: "Слоны могут слышать друг друга на расстоянии 8 км!"),
+        
+        a("cow", "Cow", "Корова", "К", .systemPurple,
+          fact: "Коровы имеют почти 360-градусный обзор!"),
+        
+        a("snake", "Snake", "Змея", "З", .systemGreen),
+        a("sheep", "Sheep", "Овечка", "О", .systemGray2),
+        a("monkey", "Monkey", "Обезьяна", "О", .systemBrown),
+        a("zebra", "Zebra", "Зебра", "З", .systemGray),
+        a("hippopotamus", "Hippopotamus", "Бегемот", "Б", .systemIndigo)
     ]
     
     static func animal(at index: Int) -> Animal? {
