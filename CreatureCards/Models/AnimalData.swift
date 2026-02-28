@@ -31,7 +31,7 @@ class AnimalData {
             soundFileName: "\(id)_sound",
             imageName: "\(id)_icon",
             color: color,
-            funFact: fact.isEmpty ? "✨ Узнай больше об этом животном!" : fact,
+            funFact: fact.isEmpty ? "✨ Узнай больше об этом животном" : fact,
             animalImageName: "\(id)_image"
         )
     }
