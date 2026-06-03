@@ -102,8 +102,8 @@ class MainViewController: UIViewController {
     }
     
     @objc private func startButtonTapped() {
-        let animalsVC = AnimalsViewController()
-        navigationController?.pushViewController(animalsVC, animated: true)
+        let menuVC = MenuViewController()
+        navigationController?.pushViewController(menuVC, animated: true)
     }
 }
 
