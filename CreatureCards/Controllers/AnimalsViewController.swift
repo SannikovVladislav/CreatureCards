@@ -87,20 +87,15 @@ class AnimalsViewController: UIViewController {
     
     private let backButton: UIButton = {
         let button = UIButton(type: .system)
-        
-        // Делаем кнопку меньше и элегантнее
         let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .semibold)
         let backImage = UIImage(systemName: "chevron.left", withConfiguration: config)
         button.setImage(backImage, for: .normal)
-        
-        // Стиль как в навигационной панели
         button.tintColor = .systemIndigo
         button.backgroundColor = .clear
         button.layer.cornerRadius = 15
         button.layer.shadowOpacity = 0
         button.translatesAutoresizingMaskIntoConstraints = false
         
-        // Добавляем текст справа от иконки
         var configButton = UIButton.Configuration.plain()
         configButton.image = backImage
         configButton.title = "Назад"

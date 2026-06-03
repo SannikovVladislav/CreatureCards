@@ -23,7 +23,6 @@ class MenuViewController: UIViewController {
     private let animalsButton: UIButton = {
         let button = UIButton(type: .system)
         
-        // Настраиваем кнопку с иконкой
         var config = UIButton.Configuration.filled()
         config.title = "Животные"
         config.subtitle = "Изучай буквы и звуки"
@@ -127,11 +126,16 @@ class MenuViewController: UIViewController {
     }
     
     @objc private func numbersTapped() {
-        let numbersVC = AnimalsViewController()
+        let numbersVC = NumbersViewController()
         navigationController?.pushViewController(numbersVC, animated: true)
     }
     
     @objc private func backTapped() {
         navigationController?.popViewController(animated: true)
     }
+}
+
+
+#Preview {
+    MenuViewController()
 }
