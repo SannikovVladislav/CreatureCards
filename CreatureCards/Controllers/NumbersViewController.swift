@@ -113,7 +113,6 @@ class NumbersViewController: UIViewController {
     // MARK: - Properties
     
     private var numbers: [Number] = []
-    private var shuffledNumbers: [Number] = []
     private var currentIndex = 0
     private var panGestureRecognizer: UIPanGestureRecognizer!
     
@@ -124,7 +123,6 @@ class NumbersViewController: UIViewController {
         
         setupNavigation()
         loadNumbers()
-        shuffleNumbers()
         setupView()
         setupConstraints()
         setupActions()
@@ -163,10 +161,6 @@ class NumbersViewController: UIViewController {
             Number(value: 10, word: "Десять", wordEng: "Ten", color: .systemIndigo,
                    imageName: "ten_image", fact: "У тебя десять пальчиков на руках!")
         ]
-    }
-    
-    private func shuffleNumbers() {
-        shuffledNumbers = numbers.shuffled()
     }
     
     private func setupView() {
@@ -241,15 +235,17 @@ class NumbersViewController: UIViewController {
     // MARK: - Display
     
     private func showCurrentNumber() {
-        guard currentIndex < shuffledNumbers.count else { return }
-        let number = shuffledNumbers[currentIndex]
+        guard currentIndex < numbers.count else {
+            currentIndex = 0
+            return
+        }
+        let number = numbers[currentIndex]
         
         numberCard.backgroundColor = number.color
         numberLabel.text = "\(number.value)"
         wordLabel.text = number.word
         wordEngLabel.text = number.wordEng
         factLabel.text = number.fact
-        
         
         // Анимация появления
         animateCardAppearance()
@@ -276,7 +272,7 @@ class NumbersViewController: UIViewController {
         numberCard.alpha = 0
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6,
-                      initialSpringVelocity: 0.5, options: []) {
+                       initialSpringVelocity: 0.5, options: []) {
             self.numberCard.transform = .identity
             self.numberCard.alpha = 1
         }
@@ -306,7 +302,11 @@ class NumbersViewController: UIViewController {
                     self.numberCard.transform = CGAffineTransform(translationX: direction * 300, y: 0)
                     self.numberCard.alpha = 0
                 }) { _ in
-                    self.currentIndex = Int.random(in: 0..<self.shuffledNumbers.count)
+                    if translation.x < 0 { // Влево — следующая цифра
+                        self.currentIndex = (self.currentIndex + 1) % self.numbers.count
+                    } else { // Вправо — предыдущая цифра
+                        self.currentIndex = (self.currentIndex - 1 + self.numbers.count) % self.numbers.count
+                    }
                     self.showCurrentNumber()
                     UIView.animate(withDuration: 0.2) {
                         self.numberCard.transform = .identity
@@ -326,7 +326,7 @@ class NumbersViewController: UIViewController {
     }
     
     @objc private func handleTap() {
-        let number = shuffledNumbers[currentIndex]
+        let number = numbers[currentIndex]
         
         // Воспроизводим звук (пока системный)
         let generator = UIImpactFeedbackGenerator(style: .medium)
@@ -373,9 +373,9 @@ class NumbersViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func nextTapped() {
-        currentIndex = Int.random(in: 0..<shuffledNumbers.count)
-        showCurrentNumber()
-    }
+        currentIndex = (currentIndex + 1) % numbers.count
+            showCurrentNumber()
+        }
     
     @objc private func backTapped() {
         navigationController?.popViewController(animated: true)
@@ -392,7 +392,7 @@ extension NumbersViewController: UIGestureRecognizerDelegate {
     }
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
-                          shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         if gestureRecognizer == panGestureRecognizer {
             return false
         }
