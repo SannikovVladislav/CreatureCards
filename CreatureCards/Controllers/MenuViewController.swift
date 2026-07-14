@@ -58,6 +58,25 @@ class MenuViewController: UIViewController {
         return button
     }()
     
+    private let alphabetButton: UIButton = {
+        let button = UIButton(type: .system)
+        
+        var config = UIButton.Configuration.filled()
+        config.title = "Алфавит"
+        config.subtitle = "Учим русские буквы"
+        config.image = UIImage(systemName: "abc")
+        config.imagePadding = 12
+        config.imagePlacement = .top
+        config.baseBackgroundColor = .systemGreen
+        config.baseForegroundColor = .white
+        config.cornerStyle = .large
+        
+        button.configuration = config
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private let backButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("← Назад", for: .normal)
@@ -83,6 +102,7 @@ class MenuViewController: UIViewController {
         view.addSubview(titleLabel)
         view.addSubview(animalsButton)
         view.addSubview(numbersButton)
+        view.addSubview(alphabetButton)
         view.addSubview(backButton)
     }
     
@@ -98,23 +118,31 @@ class MenuViewController: UIViewController {
             
             // Animals Button
             animalsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            animalsButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -60),
+            animalsButton.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 80),
             animalsButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             animalsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-            animalsButton.heightAnchor.constraint(equalToConstant: 120),
+            animalsButton.heightAnchor.constraint(equalToConstant: 100),
             
             // Numbers Button
             numbersButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             numbersButton.topAnchor.constraint(equalTo: animalsButton.bottomAnchor, constant: 30),
             numbersButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             numbersButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-            numbersButton.heightAnchor.constraint(equalToConstant: 120),
+            numbersButton.heightAnchor.constraint(equalToConstant: 100),
+            
+            // Alphabet Button
+            alphabetButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            alphabetButton.topAnchor.constraint(equalTo: numbersButton.bottomAnchor, constant: 30),
+            alphabetButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            alphabetButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            alphabetButton.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
     
     private func setupActions() {
         animalsButton.addTarget(self, action: #selector(animalsTapped), for: .touchUpInside)
         numbersButton.addTarget(self, action: #selector(numbersTapped), for: .touchUpInside)
+        alphabetButton.addTarget(self, action: #selector(alphabetTapped), for: .touchUpInside)
         backButton.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
     }
     
@@ -130,12 +158,17 @@ class MenuViewController: UIViewController {
         navigationController?.pushViewController(numbersVC, animated: true)
     }
     
+    @objc private func alphabetTapped() {
+        let alphabetVC = AlphabetViewController()
+        navigationController?.pushViewController(alphabetVC, animated: true)
+    }
+    
     @objc private func backTapped() {
         navigationController?.popViewController(animated: true)
     }
 }
 
-
+// MARK: - Preview
 #Preview {
     MenuViewController()
 }
